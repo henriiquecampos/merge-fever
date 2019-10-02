@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://screens/intro.ogg" type="AudioStream" id=1]
+[ext_resource path="res://screens/loop.ogg" type="AudioStream" id=2]
+[ext_resource path="res://screens/BGM.gd" type="Script" id=3]
+
+
+
+[node name="BGM" type="Node"]
+script = ExtResource( 3 )
+
+[node name="Intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "BGM"
+
+[node name="Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "BGM"
+[connection signal="finished" from="Intro" to="Loop" method="play"]

@@ -1,0 +1,117 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://objects/BranchContainer.gd" type="Script" id=1]
+[ext_resource path="res://objects/Branch.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Bug.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/Release.tscn" type="PackedScene" id=4]
+[ext_resource path="res://actors/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/TimedSpawner.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/Branch.gd" type="Script" id=7]
+
+
+
+[sub_resource type="Animation" id=1]
+resource_name = "glow"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.337255, 0.32549, 0.819608, 1 ), Color( 0.32549, 0.819608, 0.611765, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "glow"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.337255, 0.32549, 0.819608, 1 ), Color( 0.32549, 0.819608, 0.611765, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "glow"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.337255, 0.32549, 0.819608, 1 ), Color( 0.32549, 0.819608, 0.611765, 1 ) ]
+}
+
+[node name="BranchContainer" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Fix" type="Line2D" parent="."]
+position = Vector2( 0, 340 )
+points = PoolVector2Array( 0, 0, 1920, 0 )
+width = 30.0
+default_color = Color( 0.337255, 0.32549, 0.819608, 1 )
+texture_mode = 208022720
+script = ExtResource( 7 )
+
+[node name="Head" type="Position2D" parent="Fix"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fix"]
+anims/glow = SubResource( 1 )
+
+[node name="Development" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 420 )
+default_color = Color( 0.337255, 0.32549, 0.819608, 1 )
+texture_mode = 208164352
+
+[node name="BugSpawner" parent="Development/Head" index="1" instance=ExtResource( 6 )]
+spawnling = ExtResource( 3 )
+min_wait_time = 2.0
+max_wait_time = 7.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Development"]
+anims/glow = SubResource( 3 )
+
+[node name="Master" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 500 )
+default_color = Color( 0.337255, 0.32549, 0.819608, 1 )
+texture_mode = -11776948
+
+[node name="TimedSpawner" parent="Master/Head" index="0"]
+spawnling = ExtResource( 4 )
+min_wait_time = 7.0
+max_wait_time = 15.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Master"]
+anims/glow = SubResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, 420 )
+points = PoolVector2Array( 0, 0, 920, 0 )
+
+[editable path="Development"]
+
+[editable path="Master"]
+
+[editable path="Player"]

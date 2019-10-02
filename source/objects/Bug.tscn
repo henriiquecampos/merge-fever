@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://objects/Bug.gd" type="Script" id=1]
+[ext_resource path="res://utility/Geometry2D.gd" type="Script" id=2]
+[ext_resource path="res://objects/Outline.tres" type="Shape2D" id=3]
+[ext_resource path="res://objects/Inner.tres" type="Shape2D" id=4]
+[ext_resource path="res://objects/damage.ogg" type="AudioStream" id=5]
+
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0.3064 ), 0.0, 1.69182, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.542308, 1 )
+colors = PoolColorArray( 0.717647, 0.435294, 1, 1, 1, 1, 1, 0.145098 )
+
+[node name="Bug" type="Area2D" groups=[
+"bug",
+]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+scale = Vector2( 3, 3 )
+
+[node name="Graphic" type="Node2D" parent="."]
+
+[node name="Outline" type="CollisionShape2D" parent="Graphic"]
+shape = ExtResource( 3 )
+script = ExtResource( 2 )
+color = Color( 0.337255, 0.32549, 0.819608, 1 )
+
+[node name="Inner" type="CollisionShape2D" parent="."]
+shape = ExtResource( 4 )
+script = ExtResource( 2 )
+color = Color( 1, 0.239216, 0.239216, 1 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+emitting = false
+amount = 32
+lifetime = 0.25
+one_shot = true
+local_coords = false
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 500.0
+scale_amount = 16.0
+scale_amount_random = 0.5
+scale_amount_curve = SubResource( 1 )
+color_ramp = SubResource( 2 )
+
+[node name="Damage" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+bus = "SFX"
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
