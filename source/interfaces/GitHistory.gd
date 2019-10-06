@@ -23,8 +23,8 @@ func _on_player_head_area_entered(area):
 	elif area.is_in_group("release"):
 		add_git_command("git merge development")
 		PlayerData.bump_version()
-		var v = PlayerData.current_version
-		add_git_command('git tag "v%d.%d.%d"' % v)
+		var version = PlayerData.current_version
+		add_git_command('git tag "v%d.%d.%d"' % version)
 
 
 func _on_player_checked_out(message):
